@@ -1,0 +1,18 @@
+{% extends "network/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Network - Edit Profile{% endblock %}
+
+{% block body %}
+    <div class="row mx-2">
+        <div class="col-md-6 mx-auto mt-2 rounded">
+            <h5 class="header">Edit Profile</h5>
+            <form action="{% url 'network:edit_profile' %}", method="POST", enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input class="btn btn-sm btn-success save-profile-button" type="submit" value="Save Profile">
+            </form>
+        </div>
+    </div>
+{% endblock %}

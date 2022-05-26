@@ -1,0 +1,45 @@
+{% extends "forum/layout.html" %}
+{% load static %}
+
+{% block title %}{{ banner }} - {{ profile_user.profile.user.username }}'s Profile{% endblock %}
+{% block banner %}
+    {% if banner.banner_image %}
+        <img class="banner-image" src="{{ banner.banner_image.url }}">
+    {% else %}
+        <h1 class="banner-text">{{ banner }}</h1>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center profile-container">
+        <div class="col-md-4 p-4 rounded top-row">
+            <h3 class="display-name">{{ profile_user.profile.display_name }}</h3>
+            <img class="profile-image" src="{{ profile_user.profile.image.url }}"><br/>
+            <a id="view-posts" href="{% url 'forum:user_posts' profile_user.profile.user.username %}">View All Posts</a><br/>
+            {% if request.user == profile_user.profile.user %}
+                <a href="{% url 'forum:edit_profile' %}"><button class="mt-2 btn btn-sm btn-primary edit-profile-button">Edit Profile</button></a>
+            {% endif %}
+        </div>
+        <div class="col-md-6 py-2 rounded lightblue">
+            <div class="user-info-fields">
+                <p><strong>Username:</strong> {{ profile_user.profile.user.username }}</p>
+                <p><strong>Posts:</strong> {{ profile_user.profile.get_modified_post_count }}</p>
+                <p><strong>Topics started:</strong> {{ profile_user.profile.get_topic_count }}</p>
+                {% if profile_user.profile.get_gender %}
+                    <p><strong>Gender:</strong> {{ profile_user.profile.get_gender }}</p>
+                {% endif %}
+                {% if profile_user.profile.get_age > 0 %}
+                    <p><strong>Age:</strong> {{ profile_user.profile.get_age }}</p>
+                {% endif %}
+                {% if profile_user.profile.location %}
+                    <p><strong>Location:</strong> {{ profile_user.profile.location }}</p>
+                {% endif %}
+                <p class="pt-2 pt-md-3 border-t"><strong>Date Registered:</strong> {{ profile_user.profile.user.date_joined }}</p>
+                <p class="pb-3 border-b"><strong>Last Active:</strong> {{ profile_user.profile.user.last_login }}</p>
+                {% if profile_user.profile.tagline %}
+                    <p><strong>Tagline:</strong> {{ profile_user.profile.tagline }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

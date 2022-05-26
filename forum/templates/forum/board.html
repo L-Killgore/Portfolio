@@ -1,0 +1,96 @@
+{% extends "forum/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ banner }} - {{ board.board }}{% endblock %}
+{% block banner %}
+    {% if banner.banner_image %}
+        <img class="banner-image" src="{{ banner.banner_image.url }}">
+    {% else %}
+        <h1 class="banner-text">{{ banner }}</h1>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="row header">
+        <div class="col mt-3 title-pagination">
+            <p><a href="{% url 'forum:index' %}">{{ board.category }}</a> &raquo <a href="{% url 'forum:board' board.board_slug %}">{{ board.board }}</a></p>
+        </div>
+        {% if user.is_authenticated %}
+            <button class="col-md-1 my-2 btn btn-sm btn-primary new-topic">New Topic</button>
+            {% if board.topic_set.count == 0 %}
+                <div class="mb-2 p-3 rounded lightblue">
+            {% else %}
+                <div class="mb-2 p-3 rounded d-none new-topic-div lightblue">
+            {% endif %}
+                    <form action="{% url 'forum:board' board.board_slug %}", method='POST', enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <input class="col-md-1 mt-2 btn btn-sm btn-primary new-post-button" type='submit' value='Post'>
+                    </form>
+                </div>
+        {% endif %}
+    </div>
+
+    <div class="row board-tree">
+        <div class="row text-md-start mx-auto pb-0 rounded top-row">
+            <div class="col mt-2 text-center d-md-none">
+                <h5 class="fw-bold">{{ board.board }}</h5>
+            </div>
+            <div class="col-md-8 pt-3 d-none d-md-block">
+                <p>Subject/Started By</p>
+            </div>
+            <div class="col-md-1 pt-3 border-start d-none d-md-block text-center">
+                <p>Posts</p>
+            </div>
+            <div class="col-md-1 pt-3 border-start d-none d-md-block text-center">
+                <p>Views</p>
+            </div>
+            <div class="col-md-2 pt-3 border-start d-none d-md-block">
+                <p>Last Post</p>
+            </div>
+        </div>
+        {% if board.topic_set.count == 0 %}
+            <div class="row text-center mx-auto mb-1 py-4 rounded lightblue">
+                <h5>
+                    {% if not user.is_authenticated %}
+                        <a href="{% url 'forum:login' %}">Log in</a> or <a href="{% url 'forum:register' %}">Register</a> to be the first to post a topic on this board!
+                    {% else %}
+                        Be the first to post a topic on this board!
+                    {% endif %}
+                </h5>
+            </div>
+        {% else %}
+            {% for topic in board.topic_set.all %}
+                <div class="row text-center mx-auto mb-1 rounded lightblue">
+                    <div class="col-md-8 pb-3 pb-md-2 text-md-start border-top border-bottom">
+                        <h5 class="mt-2"><a href="{% url 'forum:topic' topic.board.board_slug topic.topic_slug %}">{{ topic.topic }}</a></h5>
+                        {% if topic.started_by == None %}
+                            <p class="info">Started by: <i>Deleted User</i></p>
+                        {% else %}
+                            <p class="info">Started by: <a href="{% url 'forum:profile' topic.started_by %}">{{ topic.started_by }}</a></p>
+                        {% endif %}
+                    </div>
+                    <div class="col-6 col-md-1 border pt-3 pt-md-3 h-md-100">
+                        <p>{{ topic.posts }} Post{{ topic.posts|pluralize }}</p>
+                    </div>
+                    <div class="col-6 col-md-1 border pt-3 pt-md-3 h-md-100">
+                        <p>{{ topic.views }} View{{ topic.views|pluralize }}</p>
+                    </div>
+                    <div class="col-md-2 text-md-start border-top border-bottom py-2 pt-md-2 h-md-100 lastpost">
+                        {% if topic.post_set.last.timestamp.date == today %}
+                            <p><strong>Today</strong>, {{ topic.post_set.last.timestamp }}</p>
+                        {% else %}
+                            <p>{{ topic.post_set.last.timestamp }}</p>
+                        {% endif %}
+                        {% if topic.post_set.last.poster == None %}
+                            <p>By: <i>Deleted User</i></p>
+                        {% else %}
+                            <p>By: <a href="{% url 'forum:profile' topic.post_set.last.poster %}">{{ topic.post_set.last.poster }}</a></p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "forum/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ banner }} - Log In{% endblock %}
+{% block banner %}
+    {% if banner.banner_image %}
+        <img class="banner-image" src="{{ banner.banner_image.url }}">
+    {% else %}
+        <h1 class="banner-text">{{ banner }}</h1>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="row login-page">
+        <h5 class="mt-3 mb-0 p-2 rounded top-row">Login</h5>
+        <div class="px-4 pt-3 lightblue">
+            {% if message %}
+                <div>{{ message }}</div>
+            {% endif %}
+            <form action="{% url 'forum:login' %}" method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input class="col-md-1 my-2 btn btn-primary login-button" type="submit" value="Login">
+            </form>
+            <p>Don't have an account? <a href="{% url 'forum:register' %}">Register here.</a></p>
+        </div>
+    </div>
+{% endblock %}

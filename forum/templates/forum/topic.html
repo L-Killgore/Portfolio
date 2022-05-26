@@ -1,0 +1,164 @@
+{% extends "forum/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ banner }} - {{ topic.topic }}{% endblock %}
+{% block banner %}
+    {% if banner.banner_image %}
+        <img class="banner-image" src="{{ banner.banner_image.url }}">
+    {% else %}
+        <h1 class="banner-text">{{ banner }}</h1>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="row header">
+        <div class="col mt-3 title-pagination">
+            <p><a href="{% url 'forum:index' %}">{{ topic.board.category }}</a> &raquo <a href="{% url 'forum:board' topic.board.board_slug %}">{{ topic.board.board }}</a> &raquo <a href="{% url 'forum:topic' topic.board.board_slug topic.topic_slug %}">{{ topic.topic }}</a></p>
+        </div>
+    </div>
+
+    <div class="row topic-tree">
+        <div class="row mx-auto rounded top-row">
+            {% if user.is_authenticated %}
+                <button class="col-md-1 btn btn-sm btn-primary my-2 new-post">New Post</button>
+            {% else %}
+                <button class="col-md-1 btn btn-sm btn-primary my-2"><a class="text-light fw-normal" href="{% url 'forum:login' %}">Log In To Post</a></button>
+            {% endif %}
+            <div class="row col-md-3 ms-auto g-0 pagination">
+                <nav class="row g-0">
+                    <p class="col-md-4 text-center text-md-end m-0 p-0 mt-2 fs-6">{{ topic.posts }} Post{{ topic.posts|pluralize }} <span class="d-none d-md-inline">--</span></p>
+                    <ul class="col-md-1 justify-content-center justify-content-md-start pt-1 pagination">
+                        {% if not posts.has_previous %}
+                            <li class="">
+                                <a class="" href="#">
+                                    <span aria-hidden="true"></span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ posts.previous_page_number }}">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% for i in page_range|default_if_none:posts.paginator.get_elided_page_range %}
+                            {% if i == posts.number %}
+                                <li class="page-item active">
+                                    <a class="page-link">{{ i }}</a>
+                                </li>
+                            {% else %}
+                                {% if i == posts.paginator.ELLIPSIS %}
+                                    <li class="page-item">
+                                        <a class="page-link">{{ i }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if not posts.has_next %}
+                            <li class="">
+                                <a class="" href="#">
+                                    <span aria-hidden="true"></span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ posts.next_page_number }}">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+            {% if user.is_authenticated %}
+                <div class="mb-2 p-3 rounded d-none new-post-div">
+                    <form action="{% url 'forum:topic' topic.board.board_slug topic.topic_slug %}", method='POST', enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <input class="col-md-1 mt-2 btn btn-sm btn-primary new-post-button" type='submit' value='Post'>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row post-tree">
+        {% for post in posts %}
+            <div class="row mx-auto mb-2 mb-md-1 rounded lightblue" id="p{{ post.pk }}">
+                <div class="col-md-2 pt-2 border-tb">
+                    {% if post.poster == None %}
+                        <p><i>Deleted User</i></p>
+                        <img class="pb-1 post-image" src="\media\default.jpg">
+                    {% else %}
+                        <div class="row">
+                            <div class="col-6 col-md-12 pt-0 pb-2 pb-md-0 user-p1">
+                                <p class="fs-5 mb-2"><a href="{% url 'forum:profile' post.poster %}">{{ post.poster }}</a></p>
+                                <img class="pb-1 post-user-image" src="{{ post.poster.profile.image.url }}">
+                            </div>
+                            <div class="col-6 my-auto col-md-12 ms-auto user-p2">
+                                <small>
+                                    <p>Posts: <span class="pc{{ post.poster.pk }}">{{ post.poster.profile.post_count }}</span></p>
+                                    <p style="margin-top: -20px;">Registered: {{ post.poster.profile.short_date_joined }}</p>
+                                </small>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-10 border-b post-content">
+                    <div class="row pb-2 border-tb">
+                        <div class="col-md-11 pt-2">
+                            <p class="my-0"><a href="{% url 'forum:board' post.topic.board.board_slug %}">{% if not post.is_parent %}RE: {% endif %}{{ post.topic.topic }}</a></p>
+                            <small>
+                                {% if post.topic_post == True %}
+                                    <strong>Started:</strong> {{ post.modify_timestamp }}
+                                {% else %}
+                                    <strong>Reply #{{ post.topic_post_number }} Posted:</strong> {{ post.modify_timestamp }}
+                                {% endif %}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="py-3 post-content-container">
+                        {% if not post.is_parent %}
+                            <div class="quoted-content">
+                                <a href="#p{{ post.parent.pk }}"><span class="quoted-user">
+                                    {% if post.parent.poster.username == None %}
+                                        <i>Deleted User</i>
+                                    {% else %}
+                                        {{ post.parent.poster.username }}
+                                    {% endif %}
+                                    wrote: </span>
+                                </a>{{ post.parent.content|linebreaksbr }}<br/>
+                                {% if post.parent.image_upload %}
+                                    <img class="post-content-image" src="{{ post.parent.image_upload.url }}" target="_blank" rel="noopener">
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        <p class="quotable-content">{{ post.content|linebreaksbr }}</p>
+                        {% if post.image_upload %}
+                            <img class="post-content-image" src="{{ post.image_upload.url }}">
+                        {% endif %}
+                    </div>
+                    {% if post.poster.profile.tagline %}
+                        <p class="mt-2 mb-2 mb-md-0 bottom-tagline">{{ post.poster.profile.tagline }}</p>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                        <div class="row">
+                            <button class="col-md-1 mb-2 ms-auto btn btn-sm btn-primary comment-button" onclick="commentToggle('{{ post.pk }}')">Comment</button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="comment-div mb-3 d-none" id="{{ post.pk }}">
+                <form action="{% url 'forum:comment' post.pk %}", method='POST', enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input class="col-md-1 mt-2 btn btn-sm btn-primary new-post-button" type='submit' value='Post'>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

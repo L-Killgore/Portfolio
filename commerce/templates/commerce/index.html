@@ -1,0 +1,28 @@
+{% extends "commerce/layout.html" %}
+{% load humanize %}
+
+{% block title %}Auctions - Home{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        {% for listing in listings %}
+            <div class="card border-danger listing">
+                <div class="row align-items-center h-100">
+                    <img class="col card-img-top listing-image" src="{{ listing.image }}">
+                </div>
+                <div class="card-body bg-light rounded mt-2 listing-info">
+                    <h4 class="card-title">{{ listing.title }}</h4>
+                    {% if listing.active == True %}
+                        <p class="condition text-muted">{{ listing.get_condition_display }}</p>
+                        <h5 class="current-price"><strong>${{ listing.current_price|intcomma }}</strong></h5>
+                        <p class="bid-number text-muted">{{ listing.number_of_bids }} Bids</p>
+                    {% else %}
+                        <p class="closed">--LISTING CLOSED--</p>
+                        <h5 class="closed-price mb-4">Closing Price: <span style="color: green;">${{ listing.current_price|intcomma }}</span></h5>
+                    {% endif %}
+                    <a class="btn btn-outline-danger" href="{% url 'commerce:listing' listing.pk %}">View Listing</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

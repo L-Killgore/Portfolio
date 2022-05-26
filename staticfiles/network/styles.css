@@ -1,0 +1,231 @@
+@media screen and (max-width: 768px) {
+    .network-nav {
+        background-color: #198754;
+        padding-top: 25px;
+    }
+}
+
+.banner {
+    font-size: 50px;
+    width: auto;
+    color: white;
+    text-shadow: 2px 2px 5px black;
+    font-size: 50px;
+    text-align: center;
+}
+
+.banner-image {
+    background-repeat: no-repeat;
+    height: 250px;
+    width: 100%;
+    outline-style: groove;
+    outline-color: #198754;
+    outline-width: 40px;
+}
+
+.banner-buttons {
+    float: right;
+    margin-top: 50px;
+    padding: 10px;
+    position: relative;
+    z-index: 2;
+}
+
+body {
+    background-color: rgba(128, 128, 128, 0.2);
+}
+
+.counts {
+    font-weight: bold;
+}
+
+.ham {
+    border-color: white;
+}
+
+.header {
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    text-align: center;
+    background-color: #198754;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 10px 0px;
+    box-shadow: 1px 1px 2px black;
+}
+
+.likes, .timestamp {
+    color: rgba(0, 0, 0, 0.75);
+    font-size: 15px;
+    margin-bottom: -5px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.network-container {
+    padding: 20px;
+    border-color: rgba(2, 95, 2, 0.2);
+    border-left-style: solid;
+    border-right-style: solid;
+    background-color: white;
+}
+
+.nav-img {
+    position: absolute;
+    height: 200px;
+    outline-style: groove;
+    outline-color: rgba(2, 95, 2, 0.7);
+    outline-width: medium;
+}
+
+.network-nav {
+    margin-top: 50px;
+    padding-top: 18px;
+}
+
+.network-nav a {
+    color: white;
+    text-shadow: 2px 2px 5px black;
+    font-size: 20px;
+}
+.network-nav a:hover {
+    color: white;
+    text-shadow: 2px 2px 5px #198754;
+    text-decoration: none;
+}
+
+.network-nav-banner {
+    background-color: #1987547e;
+    z-index: 0;
+}
+
+.new-post {
+    border: 2px solid #198754;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 1px 1px 1px black;
+}
+
+.pagination > li > a
+{
+    background-color: white;
+    color: #198754;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #5a5a5a;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: #198754 !Important;
+    border: solid 1px #198754 !Important;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: #198754 !Important;
+    border: solid 1px #198754;
+}
+
+.poster {
+    color: white;
+    text-shadow: 2px 2px 5px black;
+    font-size: 30px;
+    text-decoration: none;
+}
+
+.post-header {
+    background-color: #198754;
+    border-radius: 10px;
+    padding: 10px 0px 0px 10px;
+    margin-bottom: 20px;
+}
+
+.poster {
+    text-transform: capitalize;
+}
+
+.poster:hover {
+    color: white;
+    text-shadow: 2px 2px 5px #198754;
+    text-decoration: none;
+}
+
+.posts {
+    margin-bottom: 20px;
+    border: 1px solid #198754;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: rgba(15, 161, 15, 0.2);
+    box-shadow: 1px 1px 1px black;
+    color: black;
+}
+
+.posts > button {
+    margin-top: 10px;
+}
+
+.profile-info {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-info > li {
+    float: left;
+    margin-right: 30px;
+}
+
+.profile-view {
+    border: 2px solid #198754;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.rounded-circle {
+    height: 100px;
+    width: auto;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+}
+
+.submit {
+    margin-top: 10px;
+}
+
+#tagline {
+    color: black;
+}
+
+.user-info {
+    position: relative;
+    z-index: 1;
+    color: #198754;
+}
+
+.user-info > .rounded-circle {
+    height: 200px;
+    width: auto;
+    margin-top: -125px;
+    margin-left: 20px;
+    border: 5px solid rgba(2, 95, 2, 0.2);
+}
+
+.username {
+    font-size: 40px;
+    font-weight: bold;
+    text-transform: capitalize;
+}

@@ -1,0 +1,88 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block html %}
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <link href="{% static 'forum/styles.css' %}" rel="stylesheet"/>
+        <script src="{% static 'forum/index.js' %}"></script>
+    </head>
+    <body>
+        <div class="forum-body">
+            <div class="main">
+                <nav class="navbar navbar-expand-lg forum-nav">
+                    <div class="container text-center text-md-start">
+                        <div class="row">
+                            {% if banner.banner_image %}
+                                <img class="banner-image" src="{{ banner.banner_image.url }}">
+                            {% else %}
+                                <h1 class="banner-text">{{ banner }}</h1>
+                            {% endif %}
+                            <ul class="navbar-nav mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'forum:index' %}">Home</a>
+                                </li>
+                                {% if user.is_authenticated %}
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'forum:profile' user.username %}">My Profile</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'forum:logout' %}">Log Out</a>
+                                    </li>
+                                {% else %}
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'forum:login' %}">Log In</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'forum:register' %}">Register</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                
+                <div class="container">
+                    {% block body %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+{% endblock %}
+
+
+<!-- <body>
+    <div class="forum-body">
+        <div class="main">
+            <nav class="navbar navbar-forum navbar-expand-lg">
+                <div class="navbar-box">
+                    <ul class="forum-nav navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'forum:index' %}">Home</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'forum:profile' user.username %}">My Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'forum:logout' %}">Log Out</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'forum:login' %}">Log In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'forum:register' %}">Register</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+            
+            <div class="page-body">
+            </div>
+        </div>
+    </div>
+</body> -->

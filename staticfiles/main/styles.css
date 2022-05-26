@@ -1,0 +1,138 @@
+.about-me p, .ti {
+    text-indent: 50px;
+}
+
+.about-me-links i{
+    color: white;
+}
+
+.about-me-list {
+    list-style: none;
+}
+
+.about-me-list li::before {
+    display: inline-block;
+    width: 1.5em;
+    margin-left: -1em;
+    content: "~~";
+    font-weight: bold;
+    color: rgb(250, 199, 193)
+}
+
+.about-me-tldr {
+    background-color: rgba(250, 128, 114, 0.6);
+    border-left: 20px solid rgb(250, 199, 193);
+    border-right: 20px solid darkseagreen;
+    padding: 30px;
+    margin: 20px 0px;
+    color: white;
+}
+
+#am-l {
+    color: darkseagreen;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#am-l:hover {
+    color: rgb(250, 199, 193);
+}
+
+.about-me-tldr p {
+    text-indent: 0px;
+}
+
+body {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.blue-btn {
+    background-color: #395979;
+    color: white;
+}
+
+.blue-pane {
+    background-color: #395979;
+    color: white;
+    border-top: 5px solid;
+    border-bottom: 5px solid; 
+    border-color: rgba(255, 255, 255, 0.75);
+}
+
+.blue-pane a {
+    color: rgb(250, 128, 114);
+    text-decoration: none;
+}
+
+.btn-dark:hover {
+    color: #395979;
+}
+
+.contact-form {
+    margin-top: 25px;
+    padding: 20px;
+    text-align: left;
+    border-radius: 10px;
+}
+
+.contact-form .form-group {
+    padding: 10px;
+}
+
+.email-message {
+    margin: 100px auto 10px auto;
+}
+
+.email-message p {
+    margin: 0px;
+}
+
+.header-lightgray {
+    border-bottom: 5px solid #adb5bd;
+}
+
+.header-gold {
+    border-bottom: 5px solid #395979;
+}
+
+input, textarea {
+    width: 100%;
+}
+
+.name-pane {
+    background: url('/media/main_page_images/madrone.jpg') no-repeat center fixed;
+    background-size: cover;
+    height: 100vh;
+}
+
+.name-pane-text {
+    background-color:#395979d0;
+    border: 2px solid white;
+    margin-top: 25vh;
+    padding: 20px;
+    color: white;
+}
+
+.portfolio-nav {
+    border-bottom: 5px solid #395979d0;
+}
+
+.portfolio-nav-link {
+    color: white;
+}
+
+.portfolio-nav-link:hover {
+    color: #395979;
+}
+
+.portfolio p {
+    text-align: justify;
+}
+
+.portfolio a:hover {
+    color: darkseagreen;
+}
+
+.subheader {
+    color: rgb(250, 199, 193);
+}

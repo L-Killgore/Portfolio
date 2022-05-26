@@ -1,0 +1,34 @@
+{% extends 'commerce/layout.html' %}
+
+{% block title %}Auctions - Watchlist{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center mx-2">
+        <div class="col mx-auto my-5 p-5 rounded red-border">
+            <h1 class="h-black">My Watchlist</h1>
+            {% if pop %}
+                {% for listing in watchlist %}
+                    <div class="card border-danger listing">
+                        <div class="h-100 align-self-center">
+                            <img class="card-img-top listing-image" src="{{ listing.auction_listing.image }}">
+                        </div>
+                        <div class="card-body bg-light rounded mt-2 listing-info">
+                            <h4 class="card-title">{{ listing.auction_listing.title }}</h4>
+                            {% if listing.auction_listing.active == True %}
+                                <p class="condition text-muted">{{ listing.auction_listing.get_condition_display }}</p>
+                                <h5 class="current-price"><b>${{ listing.auction_listing.current_price }}</b></h5>
+                                <p class="bid-number text-muted">{{ listing.auction_listing.number_of_bids }} Bids</p>
+                            {% else %}
+                                <p class="closed">--LISTING CLOSED--</p>
+                                <h5 class="closed-price">Closing Price: <span style="color: green;">${{ listing.auction_listing.current_price }}</span></h5>
+                            {% endif %}
+                            <a class="btn btn-outline-danger" href="{% url 'commerce:listing' listing.auction_listing.pk %}">View Listing</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>You have no items in your Watchlist.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

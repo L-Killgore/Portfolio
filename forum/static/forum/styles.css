@@ -1,0 +1,208 @@
+.lightblue {
+    background-color: #EFEFEF;
+}
+
+.banner-text {
+    color: #083c5d;
+}
+
+.border-all {
+    border: 1px solid #083c5d;
+}
+
+.border-b {
+    border-bottom: 1px solid #083c5d;
+}
+.border-t {
+    border-top: 1px solid #083c5d;
+}
+
+.border-tb {
+    border-top: 1px solid #083c5d;
+    border-bottom: 1px solid #083c5d;
+}
+
+.border-tbl {
+    border-top: 1px solid #083c5d;
+    border-bottom: 1px solid #083c5d;
+    border-left: 1px solid #083c5d;
+}
+
+.bottom-tagline {
+    font-size: 12px;
+    border-top: 1px solid gray;
+}
+
+.top-row {
+    background-color: #083c5d;
+    color: white;
+}
+
+.comment, .comment-div {
+    background-color: #EFEFEF;
+    margin: 0px 0px 2px 5%;
+    border-radius: 10px;
+    padding: 10px;
+    width: 95%;
+}
+
+.form-control, .form-control-file {
+    margin: 10px 0px;
+}
+
+.forum-body {
+    font-size: smaller;
+    background-image: linear-gradient(darkslategray, white);
+    background-repeat: no-repeat;
+    padding-top: 20px;
+}
+
+.forum-body a {
+    color: #083c5d;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.forum-body a:hover {
+    color: rgb(240, 108, 0);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+h5 {
+    font-size: 17px;
+    font-weight: normal;
+}
+
+.info {
+    margin: -7px 0px 0px 0px;
+}
+
+.forum-nav {
+    background-color: #EFEFEF;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 30px 30px 10px 30px;
+    width: 75%;
+    margin: auto;
+}
+
+.lastpost p {
+    margin: 0px;
+}
+
+.main {
+    background-color: white;
+    margin: 50px 40px 40px 40px;
+    border-radius: 10px 10px 0px 0px;
+    padding: 30px;
+}
+
+/* .pag-bar {
+    margin-top: -45px;
+} */
+
+.pagination {
+    margin: 0px;
+    background-color: #083c5d;
+    border-color: #083c5d;
+}
+
+.pagination > p {
+    margin-top: 2px;
+}
+
+.pagination > li {
+    background-color: #083c5d;
+    border-color: #083c5d;
+}
+
+.pagination > li > a
+{
+    color: darkorange;
+    background-color: #083c5d;
+    border-color: #083c5d;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: orange;
+    background-color: white;
+    border-color: #083c5d;
+}
+
+.page-item.active .page-link {
+    background-color: #083c5d;
+    border-color: #083c5d;
+}
+
+.pagination > .active > a:hover
+{
+    text-decoration: none;
+}
+
+.post-content-image {
+    width: 100%;
+    max-width: 300px;
+    max-height: auto;
+    padding: 10px;
+}
+
+.post-user-image {
+    width: auto;
+    max-height: 100px;
+    max-width: 100px;
+}
+
+.profile-image {
+    height: auto;
+    width: 85%;
+    max-height: 300px;
+    max-width: 300px;
+    padding: 10px 0px;
+}
+
+.quoted-content {
+    border-style: solid;
+    border-width: 1px 6px;
+    border-color: #083c5d;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.quoted-user {
+    position: absolute;
+    margin-top: -22.5px;
+    background-color: #EFEFEF;
+}
+
+.quoted-user:hover {
+    text-decoration: underline;
+}
+
+.title-pagination a {
+    font-weight: bold;
+}
+
+.user-info-fields {
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 95%;
+}
+
+#view-posts {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#view-posts:hover {
+    color: rgb(240, 108, 0);
+    text-decoration: none;
+    font-weight: bold;
+}

@@ -1,0 +1,171 @@
+{% extends 'commerce/layout.html' %}
+{% load humanize %}
+
+{% block title %}Auctions - {{ listing.title }}{% endblock %}
+
+{% block body %}
+    <div class="card m-3 border-danger">
+        <div class="row g-0 listing-item">
+            <div class="col-md-3 align-self-center">
+                <img class="img-fluid" id="listing-image" alt="{{ listing.title }}" src="{{ listing.image }}">
+                <div id="image-modal" class="modal">
+                    <span class="close">&times;</span>
+                    <img class="modal-content" id="img01">
+                    <div id="caption"></div>
+                </div>
+            </div>
+            <div class="col-md-9 listing-item-info">
+                <div class="card-body bg-light rounded">
+                    <h1 class="card-title">
+                        {{ listing.title }}
+                        {% if listing.active == False %} -<span style="color: black;">- LISTING CLOSED</span>{% endif %}
+                        {% if watched %}
+                            <a class="watched-eye" href="{% url 'commerce:watchlist' %}"><i class="bi bi-eye-fill"></i></a>
+                        {% endif %}
+                    </h1>
+                    <hr/>
+
+                    <p class="card-text">{{ listing.description|linebreaks }}</p>
+                    <small class="info-div">
+                        <p class="card-text">Listed by: {% if request.user == listing.user %}<strong>you</strong>{% else %}<strong>{{ listing.user }}</strong>{% endif %}</p>
+                        <p class="card-text">Condition: {{ listing.get_condition_display }}</p>
+                        <p class="card-text">Category: <a href="{% url 'commerce:category' listing.category %}">{{ listing.get_category_display }}</a></p>
+                    </small>
+                    <hr/>
+                    <div class="row pricing-div">
+                        {% if listing.active %}
+                            <div class="col-md-6 pricing">
+                                <p class="card-text lead">Starting Price: <strong>${{ listing.starting_price|intcomma }}</strong></p>
+                                <p class="card-text lead red">Current Price: <strong>${{ listing.current_price|intcomma }}</strong></p>
+
+                                {% if listing.number_of_bids == 0 %}
+                                    <p class="card-text">0 bids so far. Be the first to bid!</p>
+                                {% else %}
+                                    <p class="card-text">
+                                        Bids: {{ listing.number_of_bids }}</p>
+                                    <p class="card-text" style="margin-top: -20px;">
+                                        Last Bidder: {% if request.user == bidder.user %}<strong>you</strong>{% else %}<strong>{{ bidder.user }}</strong>{% endif %} at {{ bidder.timestamp }}
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4 mt-4 bid-related">
+                                {% if user.is_authenticated %}
+                                    {% if request.user == listing.user %}
+                                        <form class="listing-form" action="{% url 'commerce:listing' listing.pk %}" method="POST">
+                                            {% csrf_token %}
+                                            <div class="input-group mb-3 watchlist">
+                                                <input class="btn btn-danger button" type=submit name="end" value="End Listing">
+                                            </div>
+                                        </form>
+                                    {% else %}
+                                        <form class="listing-form" action="{% url 'commerce:listing' listing.pk %}" method="POST">
+                                            {% csrf_token %}
+                                            <div class="input-group mb-3 place-bid">
+                                                <span class="input-group-text">$</span>
+                                                <input class="form-control" type="text" name="bid_value">
+                                                <span><input class="btn btn-outline-danger bid_button" type=submit value="Place Bid"></span>
+                                            </div>
+                                        </form>
+                                        <form class="listing-form" action="{% url 'commerce:listing' listing.pk %}" method="POST">
+                                            {% csrf_token %}
+                                            <div class="input-group mb-3 watchlist">
+                                                <input class="btn btn-outline-danger button" type=submit name="watchlist" value="{{ watch_button }}">
+                                            </div>
+                                        </form>
+                                    {% endif %}
+                                {% else %}
+                                    <p class="card-text">You must be <a href="{% url 'commerce:login' %}">logged in</a> to bid on this listing.</p>
+                                {% endif %}
+                            </div>
+                            {% if messages %}
+                                    {% for message in messages %}
+                                        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                                            <p class="alert alert-success text-center">{{ message }}</p>
+                                        {% else %}
+                                            <p class="alert alert-danger text-center">{{ message }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                        {% else %}
+                            <div class="col-md-6 closed-bid">
+                                <p class="card-text lead">Starting Price: <strong>${{ listing.starting_price|intcomma }}</strong></p>
+                                <h5 class="card-text mb-4 closed-price">Closing Price: <span style="color: green;">${{ listing.current_price|intcomma }}</span></h5>
+
+                                {% if listing.number_of_bids == 0 %}
+                                    <p class="card-text">There were no winners!</p>
+                                {% else %}
+                                    <p class="card-text">
+                                        Bids: {{ listing.number_of_bids }}</p>
+                                    <p class="card-text" style="margin-top: -20px;">
+                                        {% if request.user == bidder.user %}<strong>you</strong>{% else %}<strong>{{ bidder.user }}</strong>{% endif %} won the auction!
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4 mt-4 bid-related">
+                                <div class="alert alert-danger">Bidding is closed!</div>
+                                {% if user.is_authenticated %}
+                                    <form class="listing-form" action="{% url 'commerce:listing' listing.pk %}" method="POST">
+                                        {% csrf_token %}
+                                        <div class="input-group mb-3 watchlist">
+                                            <input class="btn btn-outline-danger button" type=submit name="watchlist" value="{{ watch_button }}">
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card comment_list">
+        <h3>Comments for <i>"{{ listing.title }}"</i></h3>
+        <div class="comment_form">
+            {% if request.user.is_authenticated %}
+                <form action="{% url 'commerce:listing' listing.pk %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="comment"></label>
+                        <textarea class="form-control" type="text" name="comment" required="true" autocomplete="off" placeholder="{{ comment_placeholder }}"></textarea>
+                    </div>
+                    <input class="btn btn-outline-danger comment-button" type="submit" name="add_comment", value="Comment">
+                </form>
+            {% else %}
+                <p>You must be <a href="{% url 'commerce:login' %}">logged in</a> to comment on this listing.</p>
+            {% endif %}
+        </div><hr/>
+        {% if listing.has_comments %}
+            {% for comment in comments %}
+            <div class="comment">
+                <strong>{% if request.user == comment.user %}You{% else %}{{ comment.user }}{% endif %}</strong><small class="text-muted timestamp">{{ comment.timestamp }}</small>
+                <p>{{ comment.comment }}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>There are no comments for this listing.</p>
+        {% endif %}
+    </div>
+    <script>
+        // Get the modal
+        var modal = document.getElementById("image-modal");
+
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+        var img = document.getElementById("listing-image");
+        var modalImg = document.getElementById("img01");
+        var captionText = document.getElementById("caption");
+        img.onclick = function(){
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+        }
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+        modal.style.display = "none";
+        } 
+    </script>
+{% endblock %}

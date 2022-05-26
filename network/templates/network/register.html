@@ -1,0 +1,22 @@
+{% extends "network/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Network - Register{% endblock %}
+
+{% block body %}
+<div class="row mx-2">
+    <div class="col-md-6 mx-auto mt-2 rounded login-form">
+        <h5 class="header">Register</h5>
+        {% if message %}
+            <div>{{ message }}</div>
+        {% endif %}
+        <form class="register-form" action="{% url 'network:register' %}" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input class="btn btn-success" type="submit" value="Submit">
+        </form>
+        <p>Already have an account? <a href="{% url 'network:login' %}">Log In here.</a></p>
+    </div>
+</div>
+{% endblock %}

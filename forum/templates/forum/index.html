@@ -1,0 +1,72 @@
+{% extends "forum/layout.html" %}
+{% load static %}
+
+{% block title %}{{ banner }} - Home{% endblock %}
+
+{% block body %}
+    <div class="row category-tree">
+        {% for category in categories %}
+            <h5 class="text-center text-md-start mt-3 mb-0 p-2 rounded top-row">{{ category.category }}</h5>
+            {% if category.board_set.all %}
+                {% for board in category.board_set.all %}
+                    <div class="row text-center mx-auto mb-1 rounded lightblue">
+                        <div class="col-md-8 pb-3 pb-md-2 text-md-start border border-start-0 border-end-0">
+                            <h5 class="mt-2"><a href="{% url 'forum:board' board.board_slug %}">{{ board.board }}</a></h5>
+                            <p class="info">{{ board.info }}</p>
+                        </div>
+                        <div class="col-6 col-md-1 border border-end-0 pt-3 pt-md-3 h-md-100">
+                            <p>{{ board.topic_set.count }} Topic{{ board.topic_set.count|pluralize }}</p>
+                        </div>
+                        <div class="col-6 col-md-1 border pt-3 pt-md-3 h-md-100">
+                            <p>{{ board.post_set.count }} Post{{ board.post_set.count|pluralize }}</p>
+                        </div>
+                        <div class="col-md-2 text-md-start border border-start-0 border-end-0 py-3 py-md-0 h-md-100 lastpost">
+                            {% if board.last_post == None %}
+                                <p class="text-center pt-md-3"><a href="{% url 'forum:board' board.board_slug %}">Be the first to comment!</a></p>
+                            {% else %}
+                                {% if board.last_post.poster.username == None %}
+                                    <p>Last post by: <i>Deleted User</i></p>
+                                {% else %}
+                                    <p>Last post by: <a href="{% url 'forum:profile' board.last_post.poster.username %}">{{ board.last_post.poster.username }}</a></p>
+                                {% endif %}
+                                <p>in <a href="{% url 'forum:topic' board.last_post.board.board_slug board.last_post.topic.topic_slug %}">{{ board.last_post.topic.short_topic }}</a></p>
+                                {% if board.last_post.timestamp.date == today %}
+                                    <p><strong>Today</strong>, {{ board.last_post.timestamp }}</p>
+                                {% else %}
+                                    <p>on: {{ board.last_post.timestamp }}</p>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="row text-center mx-auto mb-1 rounded lightblue">
+                    <div class="col-md-8 pb-3 pb-md-2 text-md-start border border-start-0 border-end-0">
+                        <h5 class="mt-2">Add a board in the admin panel.</h5>
+                        <p class="info">Add a board description in the admin panel.</p>
+                    </div>
+                    <div class="col-6 col-md-1 border border-end-0 pt-3 pt-md-3 h-md-100">
+                        <p>0 Topics</p>
+                    </div>
+                    <div class="col-6 col-md-1 border pt-3 pt-md-3 h-md-100">
+                        <p>0 Posts</p>
+                    </div>
+                    <div class="col-md-2 text-center border border-start-0 border-end-0 py-3 h-md-100 lastpost">
+                        <p>Be the first to comment!</p>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="row info-center">
+        <h5 class="mt-3 mb-0 p-2 rounded top-row">Info Center</h5>
+        <div class="ps-4 pt-3 lightblue">
+            <p>{{ post_count }} Post{{ post_count|pluralize }} in {{ topic_count }} Topic{{ topic_count|pluralize }} by {{ user_count }} Member{{ user_count|pluralize }}. Latest member: <a href="{% url 'forum:profile' most_recent_user.username %}">{{ most_recent_user.username }}</a></p>
+            {% if post_count == 0 %}
+                <p>{{ most_recent_post }}</p>
+            {% else %}
+                <p>Most recent post in: "<a href="{% url 'forum:topic' most_recent_post.topic.board.board_slug most_recent_post.topic.topic_slug %}">{{ most_recent_post.topic.topic }}</a>" on: {{ most_recent_post.timestamp }}</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
