@@ -38,7 +38,7 @@
                         <div class="col">
                             <h1 class="mt-3">MY PROJECTS</h1>
                             <p class="ti">
-                                Below are three web apps I created that were adapted from assignments from Harvard's <a href="https://cs50.harvard.edu/web/2020/" target="_blank">CS50: Web Programming with Python and JavaScript</a> course, for which I received certification viewable in my About Me section below. Each project can be demoed by creating an account on any of them; your account will be shared between the three. All of my code is viewable on GitHub. 
+                                Below are three web apps I created, the first of which is a React app made using the PERN Stack, and the other two are Django apps that were adapted from assignments from Harvard's <a href="https://cs50.harvard.edu/web/2020/" target="_blank">CS50: Web Programming with Python and JavaScript</a> course, for which I received certification viewable in my About Me section below. If you wish to demo one of the apps, an account can be made on Prediction Tracker, or a separate account can be made on either of the two Django projects. All of my code is viewable on GitHub by clicking the "View Code" buttons next to each project.
                             </p>
                             <p class="text-center lead"><em>These sites are still in development and are for showcasing purposes only! Do not share any personal information!</em></p>
                         </div>
@@ -56,12 +56,17 @@
                         <div class="col-md order-first order-md-second pb-5 p-md-5">
                             <h2 class="header-gold">Prediction Tracker</h2>
                             <p class="lead">An app where users can share their predictions.</p>
-                            <p>This full-stack App was created using React, Node, and Express with a PostgreSQL database (PERN Stack). Users can post their predictions and the reasons for making their predictions, and view the predictions of others. Each Prediction can be voted on as to its plausbility or correctness.</p>
+                            <p>
+                                Users can post their predictions and the reasons for making their predictions, and view the predictions of others. Each Prediction can be voted on as to its plausbility or correctness. This full-stack App was created using React, Node.js, and Express with a PostgreSQL database (PERN Stack). Sequelize is used as the ORM tool, in addition to Axios used for handling API calls. Finally, React's createContext() hook is used to create a Context Provider to handle state globally. Heroku is the service provider that serves the backend of the app, and an AWS S3 Bucket is used to serve the frontend. Bootstrap is used for most of the design.
+                            </p>
                             <a href="http://prediction-tracker.lukaskillgore.com" class="btn btn-dark mt-3">
                                 <i class="bi bi-chevron-right">View Demo</i>
                             </a>
-                            <a href="#" target="_blank" class="btn btn-dark mt-3">
-                                <i class="bi bi-chevron-right">View Code</i>
+                            <a href="https://github.com/L-Killgore/prediction-tracker-client" target="_blank" class="btn btn-dark mt-3">
+                                <i class="bi bi-chevron-right">View Frontend Code</i>
+                            </a>
+                            <a href="https://github.com/L-Killgore/prediction-tracker-server" target="_blank" class="btn btn-dark mt-3">
+                                <i class="bi bi-chevron-right">View Backend Code</i>
                             </a>
                         </div>
                     </div>
@@ -74,11 +79,13 @@
                         <div class="col-md pb-5 p-md-5">
                             <h2 class="header-lightgray">Auction House</h2>
                             <p class="lead">A simple e-commerce website.</p>
-                            <p>Users can create listings, bid on items, add items to a watchlist, and post comments on listings. The poster of a listing can also close the bidding for the item, and the winner will be displayed. Lastly, each listing is put in a category that is browsable through the Categories page.</p>
+                            <p>
+                                Users can create listings, bid on items, add items to a watchlist, and post comments on listings. The poster of a listing can also close the bidding for the item, and the winner will be displayed. Lastly, each listing is put in a category that is browsable through the Categories page. This app was built using Django and Bootstrap.
+                            </p>
                             <a href="{% url 'commerce:index' %}" class="btn mt-3 blue-btn">
                                 <i class="bi bi-chevron-right">View Demo</i>
                             </a>
-                            <a href="https://github.com/L-Killgore/Portfolio-viewable/tree/main/commerce" target="_blank" class="btn mt-3 blue-btn">
+                            <a href="https://github.com/L-Killgore/Portfolio/tree/master/commerce" target="_blank" class="btn mt-3 blue-btn">
                                 <i class="bi bi-chevron-right">View Code</i>
                             </a>
                         </div>
@@ -120,11 +127,13 @@
                         <div class="col-md pb-5 p-md-5 order-first order-md-second">
                             <h2 class="header-gold">Coding Corner</h2>
                             <p class="lead">A forum website.</p>
-                            <p>At Coding Corner, users can create topics on forum boards, make posts on topics, and comment on posts. The categories and board titles can only be set by a user with administrative privileges, but any user can start a new topic. Post and View counts are tallied, and information about the most recent post in a topic is displayed. This project also has a user profile with editable content, along with a link that leads to a page with a list of all the topics and posts a user has made. Lastly, an administrator can upload banner images and forum titles and swap these on the fly.</p>
+                            <p>
+                                At Coding Corner, users can create topics on forum boards, make posts on topics, and comment on posts. The categories and board titles can only be set by a user with administrative privileges, but any user can start a new topic. Post and View counts are tallied, and information about the most recent post in a topic is displayed. This project also has a user profile with editable content, along with a link that leads to a page with a list of all the topics and posts a user has made. Lastly, an administrator can upload banner images and forum titles and swap these on the fly. This app was built using Django and Bootstrap.
+                            </p>
                             <a href="{% url 'forum:index' %}" class="btn btn-dark mt-3">
                                 <i class="bi bi-chevron-right">View Demo</i>
                             </a>
-                            <a href="https://github.com/L-Killgore/Portfolio-viewable/tree/main/forum" target="_blank" class="btn btn-dark mt-3">
+                            <a href="https://github.com/L-Killgore/Portfolio/tree/master/forum" target="_blank" class="btn btn-dark mt-3">
                                 <i class="bi bi-chevron-right">View Code</i>
                             </a>
                         </div>
@@ -187,7 +196,7 @@
                 </div>
             </section>
 
-            <footer class="bg-dark text-light text-center pb-5">&#169 2021 - Lukas Killgore</footer>
+            <footer class="bg-dark text-light text-center pb-5">&#169 2022 - Lukas Killgore</footer>
         {% endif %}
     </div>
 {% endblock %}
