@@ -2,8 +2,16 @@
     text-indent: 50px;
 }
 
-.about-me-links i{
+.about-me-links {
     color: white;
+}
+
+.about-me-links:hover {
+    color: rgb(143, 188, 143);
+}
+
+.about-me-links i {
+    font-size: 30px;
 }
 
 .about-me-list {
@@ -28,13 +36,13 @@
     color: white;
 }
 
-#am-l {
-    color: darkseagreen;
+.about-me-tldr a {
+    color: rgb(143, 188, 143);
     text-decoration: none;
     font-weight: bold;
 }
 
-#am-l:hover {
+.about-me-tldr a:hover {
     color: rgb(250, 199, 193);
 }
 
@@ -51,6 +59,10 @@ body {
     color: white;
 }
 
+.blue-btn:hover {
+    color: rgb(143, 188, 143);
+}
+
 .blue-pane {
     background-color: #395979;
     color: white;
@@ -59,13 +71,8 @@ body {
     border-color: rgba(255, 255, 255, 0.75);
 }
 
-.blue-pane a {
-    color: rgb(250, 128, 114);
-    text-decoration: none;
-}
-
 .btn-dark:hover {
-    color: #395979;
+    color: rgb(143, 188, 143);
 }
 
 .contact-form {
@@ -125,12 +132,17 @@ input, textarea {
     color: #395979;
 }
 
-.portfolio p {
-    text-align: justify;
+.project-header a {
+    color: rgb(250, 128, 114);
+    text-decoration: none;
 }
 
-.portfolio a:hover {
+.project-header a:hover {
     color: darkseagreen;
+}
+
+.portfolio p {
+    text-align: justify;
 }
 
 .subheader {
